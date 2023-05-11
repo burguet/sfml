@@ -16,6 +16,7 @@
 		void hit();
 		sf::Vector2f getPosition();
 		sf::Vector2f getSize();
+		
 	};
 
 

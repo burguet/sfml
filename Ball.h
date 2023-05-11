@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Player.h"
+#include "brick.h"
 #include <SFML/Graphics.hpp>
 
 class Ball
@@ -25,6 +26,10 @@ public:
 	sf::Vector2f getPosition();
 	void setDirection(sf::Vector2f newDirection);
 
-	void manageCollisionWith(sf::RenderWindow& window);
+	void manageCollisionWith(Player& player, sf::RenderWindow& window);
+	void manageCollisionWith(Brick& brick);
+	sf::CircleShape& getShape();
+	bool checkCollisionWith(Player& player) ;
+	bool checkCollisionWith(Brick& brick);
 };
 

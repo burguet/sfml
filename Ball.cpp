@@ -73,7 +73,7 @@ void Ball::setDirection(sf::Vector2f newDirection)
 	direction = newDirection;
 }
 
-void Ball::manageCollisionWith(sf::RenderWindow & window)
+void Ball::manageCollisionWith(Player& player, sf::RenderWindow& window)
 {
 	// Si la balle sort de l'écran (par en haut)
 	if (position.y <= 0)
@@ -98,4 +98,70 @@ void Ball::manageCollisionWith(sf::RenderWindow & window)
 		direction.x *= -1;
 		position.x = window.getSize().x - 2 * radius;
 	}
+
+	// Vérifiez si la balle touche le joueur
+	if (shape.getGlobalBounds().intersects(player.getShape().getGlobalBounds()))
+	{
+		// Calcule la position relative de la balle par rapport au joueur
+		float relativePosition = (position.x + radius) - (player.getPosition().x + player.getSize().x / 2);
+
+		// Modifie la direction de la balle en fonction de la position relative
+		direction.x = relativePosition / (player.getSize().x / 2);
+		direction.y *= -1;
+
+		// Placez la balle au-dessus du joueur pour éviter qu'elle reste collée
+		position.y = player.getPosition().y - radius * 2;
+	}
+
+
+}
+
+sf::CircleShape& Ball::getShape()
+{
+	return shape;
+}
+
+bool Ball::checkCollisionWith( Player& player) 
+{
+	return shape.getGlobalBounds().intersects(player.getShape().getGlobalBounds());
+}
+
+void Ball::manageCollisionWith(Brick& brick)
+{
+	if (checkCollisionWith(brick)) {
+		float overlapLeft = position.x + radius - brick.getPosition().x;
+		float overlapRight = brick.getPosition().x + brick.getSize().x - position.x + radius;
+		float overlapTop = position.y + radius - brick.getPosition().y;
+		float overlapBottom = brick.getPosition().y + brick.getSize().y - position.y + radius;
+
+		bool ballFromLeft(abs(overlapLeft) < abs(overlapRight));
+		bool ballFromTop(abs(overlapTop) < abs(overlapBottom));
+
+		float minOverlapX = ballFromLeft ? overlapLeft : overlapRight;
+		float minOverlapY = ballFromTop ? overlapTop : overlapBottom;
+
+		if (abs(minOverlapX) < abs(minOverlapY)) {
+			direction.x = ballFromLeft ? -1.f : 1.f;
+			position.x += minOverlapX;
+		}
+		else {
+			direction.y = ballFromTop ? -1.f : 1.f;
+			position.y += minOverlapY;
+		}
+
+		brick.hit();
+	}
+}
+
+bool Ball::checkCollisionWith(Brick& brick)
+{
+	if (position.x + radius > brick.getPosition().x &&
+		position.x - radius < brick.getPosition().x + brick.getSize().x &&
+		position.y + radius > brick.getPosition().y &&
+		position.y - radius < brick.getPosition().y + brick.getSize().y)
+	{
+		return true;
+	}
+
+	return false;
 }

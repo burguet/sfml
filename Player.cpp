@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
+
 Player::Player(int y, int width, int height)
 {
 	this->y = y;
@@ -37,6 +38,19 @@ void Player::move(const sf::Vector2f& mousePosition, float deltaTime)
 	position.x = mousePosition.x - size.x / 2.f;
 	position.y = y;
 
+	// Vérifier si la barre sort de l'écran
+	if (position.x < 0) {
+		position.x = 0;
+	}
+	else if (position.x + size.x > 800) { // 800 est la largeur de l'écran
+		position.x = 800 - size.x;
+	}
+
 	// Déplacer le joueur
 	shape.setPosition(position);
+}
+
+sf::RectangleShape& Player::getShape()
+{
+	return shape;
 }

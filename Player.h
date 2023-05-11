@@ -15,5 +15,5 @@ public:
 	sf::Vector2f getPosition();
 	sf::Vector2f getSize();
 	void move(const sf::Vector2f& mousePosition, float deltaTime);
-	
+	sf::RectangleShape& getShape();
 };
