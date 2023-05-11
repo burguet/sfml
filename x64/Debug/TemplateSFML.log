@@ -1,27 +1,27 @@
 ﻿  Ball.cpp
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(9): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(18): warning C4244: '=' : conversion de 'double' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(9): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(18): warning C4244: '=' : conversion de 'double' en 'T', perte possible de données
           with
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(19): warning C4244: '=' : conversion de 'double' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(19): warning C4244: '=' : conversion de 'double' en 'T', perte possible de données
           with
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(24): warning C4244: '=' : conversion de 'int' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(24): warning C4244: '=' : conversion de 'int' en 'T', perte possible de données
           with
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(25): warning C4244: '=' : conversion de 'int' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(25): warning C4244: '=' : conversion de 'int' en 'T', perte possible de données
           with
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(29): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(88): warning C4244: '=' : conversion de 'T' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(29): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(88): warning C4244: '=' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
@@ -30,29 +30,18 @@ c:\users\lucas\desktop\sfml\sfml\ball.cpp(88): warning C4244: '=' : conversion 
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\ball.cpp(99): warning C4244: '=' : conversion de 'T' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\ball.cpp(99): warning C4244: '=' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
           ]
           and
-          [
-              T=float
-          ]
-  brick.cpp
-c:\users\lucas\desktop\sfml\sfml\brick.cpp(4): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
-          [
-              T=float
-          ]
-c:\users\lucas\desktop\sfml\sfml\brick.cpp(5): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
-          with
           [
               T=float
           ]
   main.cpp
-c:\users\lucas\desktop\sfml\sfml\main.cpp(36): warning C4018: '<=' : incompatibilité signed/unsigned
-c:\users\lucas\desktop\sfml\sfml\main.cpp(46): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\main.cpp(36): warning C4018: '<=' : incompatibilité signed/unsigned
+c:\users\gamer\desktop\sfml\sfml\main.cpp(46): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
@@ -61,6 +50,6 @@ c:\users\lucas\desktop\sfml\sfml\main.cpp(46): warning C4244: 'argument' : conv
           [
               T=float
           ]
-c:\users\lucas\desktop\sfml\sfml\main.cpp(84): warning C4244: 'argument' : conversion de 'double' en 'sf::Uint8', perte possible de données
+c:\users\gamer\desktop\sfml\sfml\main.cpp(84): warning C4244: 'argument' : conversion de 'double' en 'sf::Uint8', perte possible de données
   Génération de code en cours...
-  TemplateSFML.vcxproj -> C:\Users\lucas\Desktop\sfml\sfml\x64\Debug\TemplateSFML.exe
+  TemplateSFML.vcxproj -> C:\Users\gamer\Desktop\SFML\sfml\x64\Debug\TemplateSFML.exe

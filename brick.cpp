@@ -22,14 +22,17 @@ void Brick::draw(sf::RenderWindow& window)
 
 sf::Color Brick::getColorFromLife()
 {
-	if (health >= 4) {
-		return sf::Color::Red;
+	if (health == 3) {
+		return sf::Color::Green;
 	}
-	else if (health >= 2) {
+	else if (health == 2) {
 		return sf::Color::Yellow;
 	}
+	else if (health == 1) {
+		return sf::Color::Red;
+	}
 	else {
-		return sf::Color::Green;
+		return sf::Color::Transparent; // la brique est détruite
 	}
 }
 
@@ -53,3 +56,4 @@ sf::Vector2f Brick::getSize()
 {
 	return size;
 }
+

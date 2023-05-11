@@ -9,12 +9,14 @@ private:
 	sf::CircleShape shape;
 	sf::Vector2f oldPosition;
 	sf::Vector2f position;
+	sf::Vector2f velocity;
 	float speed;
 	int radius;
 	sf::Vector2f direction;
 	static bool isRandInitialized;
 	double randomizeAngle();
 	void setAngle(double angle);
+	void reflect(sf::Vector2f normal);
 public:
 	Ball(int x, int y, int radius, float speed);
 	~Ball();
@@ -27,9 +29,10 @@ public:
 	void setDirection(sf::Vector2f newDirection);
 
 	void manageCollisionWith(Player& player, sf::RenderWindow& window);
-	void manageCollisionWith(Brick& brick);
+	
 	sf::CircleShape& getShape();
 	bool checkCollisionWith(Player& player) ;
-	bool checkCollisionWith(Brick& brick);
+	
+
 };
 

@@ -13,7 +13,7 @@ double mapValue(double value, double min, double max, double nMin, double nMax)
 int main(int argc, char **argv)
 {
 
-	Ball ball(200, 250, 10, 500);
+	Ball ball(200, 250, 10, 1000);
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	
 
