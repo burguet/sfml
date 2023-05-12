@@ -2,6 +2,23 @@
 
 bool Ball::isRandInitialized = false;
 
+Ball::Ball(int x, int y, int radius, float speed) :
+	position(x, y),
+	oldPosition(position),
+	direction(1.f, 1.f),
+	radius(radius),
+	speed(speed)
+	
+{
+	shape.setFillColor(sf::Color::White);
+	shape.setRadius(radius);
+	setAngle(randomizeAngle());
+}
+
+Ball::~Ball()
+{
+} 
+
 double Ball::randomizeAngle()
 {
 	if (!isRandInitialized)
@@ -19,51 +36,34 @@ void Ball::setAngle(double angle)
 	direction.y = -cos(angle);
 }
 
-Ball::Ball(int x, int y, int radius, float speed)
+
+
+void Ball::move(float elapsedTime)
 {
-	position.x = x;
-	position.y = y;
 	oldPosition = position;
-	shape.setFillColor(sf::Color(sf::Color::White));
-	this->radius = radius;
-	shape.setRadius(radius);
-	this->speed = speed;
-
-	setAngle(randomizeAngle());
-}
-
-Ball::~Ball()
-{
-}
-
-void Ball::move(float ellapsedTime)
-{
-	position += ellapsedTime * speed * direction;
-}
-
-void Ball::draw(sf::RenderWindow & window)
-{
+	position += elapsedTime * speed * direction;
 	shape.setPosition(position);
+}
+
+void Ball::draw(sf::RenderWindow& window)
+{
 	window.draw(shape);
 }
 
-float Ball::getSpeed()
+float Ball::getSpeed() const
 {
 	return speed;
 }
 
-void Ball::setSpeed(float newSpeed)
-{
-	speed = newSpeed;
-}
 
 void Ball::setPosition(sf::Vector2f newPosition)
 {
 	position = newPosition;
 	oldPosition = position;
+	shape.setPosition(position);
 }
 
-sf::Vector2f Ball::getPosition()
+sf::Vector2f Ball::getPosition() const
 {
 	return position;
 }
@@ -73,7 +73,7 @@ void Ball::setDirection(sf::Vector2f newDirection)
 	direction = newDirection;
 }
 
-void Ball::manageCollisionWith(Player& player, sf::RenderWindow& window)
+void Ball::manageCollisionWith( Player& player, sf::RenderWindow& window)
 {
 	// Si la balle sort de l'écran (par en haut)
 	if (position.y <= 0)
@@ -114,6 +114,55 @@ void Ball::manageCollisionWith(Player& player, sf::RenderWindow& window)
 	}
 
 
+}
+
+void Ball::manageCollisionWithBrick(Brick& brick)
+{
+	// Créer le rectangle de la zone de collision de la balle avec la barre
+	sf::FloatRect ballRect(position.x, position.y, 2 * radius, 2 * radius);
+	sf::FloatRect briqueRect(brick.getPosition().x, brick.getPosition().y, brick.getSize().x, brick.getSize().y);
+
+	// Vérifier si la zone de collision de la balle intersecte le rectangle de la barre
+	if (ballRect.intersects(briqueRect)) {
+
+		// Calcule la position relative de la balle par rapport à la brique
+		double relativeIntersectX = position.x + radius - brick.getPosition().x - brick.getSize().x / 2.0;
+		double relativeIntersectY = position.y + radius - brick.getPosition().y - brick.getSize().y / 2.0;
+
+		// Normalise la position relative de la balle
+		double normalizedRelativeIntersectionX = relativeIntersectX / (brick.getSize().x / 2.0);
+		double normalizedRelativeIntersectionY = relativeIntersectY / (brick.getSize().y / 2.0);
+
+		// Déterminer quelle surface de la brique a été touchée
+		if (std::abs(normalizedRelativeIntersectionX) > std::abs(normalizedRelativeIntersectionY)) {
+			// La balle a touché le côté gauche ou droit de la brique
+			if (normalizedRelativeIntersectionX > 0) {
+				// La balle a touché le côté droit de la brique
+				position.x = brick.getPosition().x + brick.getSize().x + radius;
+				brick.hit();
+			}
+			else {
+				// La balle a touché le côté gauche de la brique
+				position.x = brick.getPosition().x - 2 * radius;
+				brick.hit();
+			}
+			direction.x = -direction.x;
+		}
+		else {
+			// La balle a touché le haut ou le bas de la brique
+			if (normalizedRelativeIntersectionY > 0) {
+				// La balle a touché le bas de la brique
+				position.y = brick.getPosition().y + brick.getSize().y + radius;
+				brick.hit();
+			}
+			else {
+				// La balle a touché le haut de la brique
+				position.y = brick.getPosition().y - 2 * radius;
+				brick.hit();
+			}
+			direction.y = -direction.y;
+		}
+	}
 }
 
 sf::CircleShape& Ball::getShape()

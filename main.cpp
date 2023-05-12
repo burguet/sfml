@@ -3,6 +3,7 @@
 #include "brick.h"
 #include "Player.h"
 
+
 double mapValue(double value, double min, double max, double nMin, double nMax)
 {
 	// Y = (X-A)/(B-A) * (D-C) + C
@@ -13,15 +14,36 @@ double mapValue(double value, double min, double max, double nMin, double nMax)
 int main(int argc, char **argv)
 {
 
-	Ball ball(200, 250, 10, 1000);
+	
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	
 
+	// Création de la plateforme, de la balle, des bricks et de la fenêtre
+	std::deque<Brick*> bricks;
+	Player player(550, 100, 11);
+	Ball ball(200, 250, 10, 550); // x,y,size,speedddd
 
-	std::vector<Brick> bricks;
 
-	const int brickWidth = 100;
-	const int brickHeight = 50;
+
+	
+
+
+	int numBricksPerLine = 10; // Nombre de briques par ligne
+	int brickWidth = 80; // Largeur d'une brique
+	int brickHeight = 30; // Hauteur d'une brique
+	int horizontalSpacing = (800 - numBricksPerLine * brickWidth) / (numBricksPerLine + 1); // Espacement horizontal entre les briques
+	int verticalSpacing = 30; // Espacement vertical entre les briques
+	for (int i = 0; i < 4; i++) { // Boucle pour créer 4 lignes de bricks
+		for (int j = 0; j < numBricksPerLine; j++) { // Boucle pour créer le nombre de briques spécifié par ligne
+			int x = horizontalSpacing + j * (brickWidth + horizontalSpacing); // Position x de la brick en fonction de j
+			int y = verticalSpacing + i * (brickHeight + verticalSpacing); // Position y de la brick en fonction de i
+			bricks.push_back(new Brick(x, y, brickWidth, brickHeight, 3)); // Création d'une nouvelle brick et ajout dans la deque
+		}
+	}
+
+	
+
+	
 	const int numRows = 3;
 	const int numCols = 10;
 
@@ -34,13 +56,14 @@ int main(int argc, char **argv)
 
 			// vérifier si la brique est dans l'écran
 			if (x + brickWidth <= window.getSize().x && y + brickHeight <= window.getSize().y) {
-				Brick brick(x, y, brickWidth, brickHeight, 3 - i);
+				Brick * brick = new Brick(x, y, brickWidth, brickHeight, 3 - i);
 				bricks.push_back(brick);
 			}
 		}
 	}
 
-	Player player(550, 100, 10);
+	
+	
 
 	sf::RectangleShape rdr2;
 	rdr2.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
@@ -73,6 +96,20 @@ int main(int argc, char **argv)
 		
 		ball.manageCollisionWith(player, window);
 
+		for (int i = 0; i < bricks.size(); i++)
+		{
+			if (bricks[i]->isAlive())
+			{
+				bricks[i]->draw(window);
+				ball.manageCollisionWithBrick(*bricks[i]);
+			}
+			else
+			{
+				bricks[i]->destroyAndDelete(bricks);
+			}
+		}
+		
+		
 		window.clear();
 
 
@@ -88,11 +125,11 @@ int main(int argc, char **argv)
 		rdr2.setPosition(0, 0);
 		window.draw(rdr2);
 		ball.draw(window);
-		for (Brick& brick : bricks)
+		for (Brick* brick : bricks)
 		{
-			if (brick.isAlive())
+			if (brick->isAlive())
 			{
-				brick.draw(window);
+				brick->draw(window);
 			}
 		}
 		player.draw(window);
